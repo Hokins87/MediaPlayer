@@ -27,7 +27,7 @@ public class MediaPlayerController implements Initializable {
 
 	@FXML
 	CheckBox checkBox;
-	
+
 	@FXML
 	Slider slider;
 
@@ -36,49 +36,49 @@ public class MediaPlayerController implements Initializable {
 
 	@FXML
 	BorderPane borderPane;
-	
+
 	private Media media;
 	private MediaPlayer mediaPlayer;
 	private MediaView mediaView;
 
-	public void initialize(URL location, ResourceBundle resources) {		
+	public void initialize(URL location, ResourceBundle resources) {
 		borderPane.setCenter(createMediaView());
-		toolBar = new ToolBar(btnPlay, btnPause, btnStop, btnOpen, slider, checkBox);
-		borderPane.setBottom(toolBar);
+		createToolbar();
 		MyEvent event = new MyEvent();
 		btnPlay.setOnAction(event);
 		btnPause.setOnAction(event);
 		btnStop.setOnAction(event);
 		btnOpen.setOnAction(event);
 	}
-	
-	public String getPath(){
+
+	public void createToolbar() {
+		toolBar = new ToolBar(btnPlay, btnPause, btnStop, btnOpen, slider, checkBox);
+		borderPane.setBottom(toolBar);
+	}
+
+	public MediaView createMediaView() {
 		FileChooser fc = new FileChooser();
-		fc.getExtensionFilters().add(new ExtensionFilter("Media files","*.flv", "*.mp4", "*.mpeg"));
+		fc.getExtensionFilters().add(new ExtensionFilter("Media files", "*.flv", "*.mp4", "*.mpeg"));
 		File file = fc.showOpenDialog(null);
 		String path = file.getAbsolutePath();
 		path = path.replace("\\", "/");
-		return path;
-	}
-	
-	public MediaView createMediaView(){
-		media = new Media(new File(getPath()).toURI().toString());
+		media = new Media(new File(path).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
 		mediaView = new MediaView(mediaPlayer);
 		mediaPlayer.setAutoPlay(true);
-		return mediaView;	
+		return mediaView;
 	}
-	
-	public void fullScreen(ActionEvent event){
-		if(checkBox.isSelected()){
+
+	public void fullScreen(ActionEvent event) {
+		if (checkBox.isSelected()) {
 			MediaPlayerMain.getStage().setFullScreen(true);
 			System.out.println("Fullscreen true");
-		}else{
+		} else {
 			MediaPlayerMain.getStage().setFullScreen(false);
 			System.out.println("Fullscreen false");
 		}
 	}
-	
+
 	class MyEvent implements EventHandler<ActionEvent> {
 
 		public void handle(ActionEvent event) {
@@ -89,10 +89,11 @@ public class MediaPlayerController implements Initializable {
 				mediaPlayer.pause();
 			} else if (btn.equals(btnStop)) {
 				mediaPlayer.stop();
-			} else if (btn.equals(btnOpen)){
-				if(mediaPlayer.getStatus().equals(Status.PLAYING)){
-					mediaPlayer.pause();
-					createMediaView().setMediaPlayer(new MediaPlayer(media));
+			} else if (btn.equals(btnOpen)) {
+				if (mediaPlayer.getStatus().equals(Status.PLAYING)) {
+					mediaPlayer.dispose();
+					borderPane.setCenter(createMediaView());
+					createToolbar();
 				}
 			}
 			System.out.println(btn.getText());
@@ -100,4 +101,3 @@ public class MediaPlayerController implements Initializable {
 
 	}
 }
-
