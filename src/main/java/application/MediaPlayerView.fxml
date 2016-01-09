@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MediaPlayerController">
+   <bottom>
+      <ToolBar fx:id="toolBar" nodeOrientation="LEFT_TO_RIGHT" opacity="0.8" prefHeight="20.0" prefWidth="0.0" BorderPane.alignment="CENTER">
+        <items>
+          <Button fx:id="btnPlay" mnemonicParsing="false" text="Play" />
+            <Button fx:id="btnPause" mnemonicParsing="false" text="Pause" />
+            <Button fx:id="btnStop" mnemonicParsing="false" text="Stop" />
+            <Button fx:id="btnOpen" mnemonicParsing="false" text="Open" />
+            <Slider fx:id="slider" />
+            <CheckBox fx:id="checkBox" mnemonicParsing="false" onAction="#fullScreen" text="Fullscreen" />
+        </items>
+         <cursor>
+            <Cursor fx:constant="NONE" />
+         </cursor>
+         <effect>
+            <InnerShadow color="#281818" height="71.41" radius="31.4975" width="56.58" />
+         </effect>
+      </ToolBar>
+   </bottom>
+</BorderPane>
